@@ -13,6 +13,14 @@ app.use(express.static("public"));
 // Load environment variables
 require('dotenv').config();
 
+// Start server
+mongoose.connect(`mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_HOST}/${process.env.MONGODB_DATABASE}`)
+    .then(() => {
+        app.listen(process.env.PORT || 3000, () => {
+            console.log('Listening to server!');
+        });
+    })
+    .catch(err => console.error(err));
 
 var mongoStore = MongoStore.create({
 	mongoUrl: `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_HOST}/${process.env.MONGODB_DATABASE}`,
@@ -153,14 +161,6 @@ app.get('/signout', (req, res) => {
     res.redirect('/');
 });
 
-// Start server
-mongoose.connect(`mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_HOST}/${process.env.MONGODB_DATABASE}`)
-    .then(() => {
-        app.listen(process.env.PORT || 3000, () => {
-            console.log('Listening to server!');
-        });
-    })
-    .catch(err => console.error(err));
 
 app.get('/', (req, res) => {
     if (req.session.global_authenticate) {
