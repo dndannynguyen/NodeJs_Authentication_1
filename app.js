@@ -176,7 +176,7 @@ app.get('/', (req, res) => {
         `);
     } else {
         res.send(`
-            <h1>Welcome to the Home Page!</h1>
+            <h1>Welcome!</h1>
             <form method="get" action="/login">
                 <input type="submit" value="Log In">
             </form>
